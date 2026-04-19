@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Juego Sapo 🐸</title>
+
+<style>
+body {
+  margin: 0;
+  background: #1f1c2c;
+  overflow: hidden;
+}
+
+#game {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(#4facfe, #00f2fe);
+}
+
+#sapo {
+  position: absolute;
+  bottom: 0;
+  left: 50px;
+  width: 50px;
+  height: 50px;
+  background: green;
+  border-radius: 50%;
+}
+
+.obstaculo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 60px;
+  background: red;
+  animation: mover 2s linear infinite;
+}
+
+@keyframes mover {
+  from { right: -40px; }
+  to { right: 100%; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+  <div id="sapo"></div>
+</div>
+
+<script>
+let sapo = document.getElementById("sapo");
+let saltando = false;
+
+document.addEventListener("click", () => {
+  if (!saltando) {
+    saltando = true;
+    let salto = 0;
+
+    let subir = setInterval(() => {
+      if (salto >= 100) {
+        clearInterval(subir);
+        let bajar = setInterval(() => {
+          if (salto <= 0) {
+            clearInterval(bajar);
+            saltando = false;
+          }
+          salto -= 5;
+          sapo.style.bottom = salto + "px";
+        }, 20);
+      }
+      salto += 5;
+      sapo.style.bottom = salto + "px";
+    }, 20);
+  }
+});
+
+function crearObstaculo() {
+  let obs = document.createElement("div");
+  obs.classList.add("obstaculo");
+  document.getElementById("game").appendChild(obs);
+
+  let mover = setInterval(() => {
+    let sapoTop = sapo.getBoundingClientRect();
+    let obsTop = obs.getBoundingClientRect();
+
+    if (
+      sapoTop.right > obsTop.left &&
+      sapoTop.left < obsTop.right &&
+      sapoTop.bottom > obsTop.top
+    ) {
+      alert("Perdiste 😢");
+      location.reload();
+    }
+  }, 10);
+
+  setTimeout(() => {
+    obs.remove();
+    clearInterval(mover);
+  }, 2000);
+}
+
+setInterval(crearObstaculo, 2000);
+</script>
+
+</body>
+</html>
