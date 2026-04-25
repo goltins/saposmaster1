@@ -7,39 +7,33 @@
 <style>
 body {
   margin: 0;
-  background: #1f1c2c;
   overflow: hidden;
+  background: #4facfe;
 }
 
 #game {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(#4facfe, #00f2fe);
 }
 
 #sapo {
   position: absolute;
   bottom: 0;
   left: 50px;
-  width: 50px;
-  height: 50px;
-  background: green;
-  border-radius: 50%;
+  font-size: 40px;
 }
 
 .obstaculo {
   position: absolute;
   bottom: 0;
-  right: 0;
-  width: 40px;
-  height: 60px;
-  background: red;
-  animation: mover 2s linear infinite;
+  right: -50px;
+  font-size: 40px;
+  animation: mover 2s linear forwards;
 }
 
 @keyframes mover {
-  from { right: -40px; }
+  from { right: -50px; }
   to { right: 100%; }
 }
 </style>
@@ -48,49 +42,52 @@ body {
 <body>
 
 <div id="game">
-  <div id="sapo"></div>
+  <div id="sapo">🐸</div>
 </div>
 
 <script>
 let sapo = document.getElementById("sapo");
 let saltando = false;
 
+// SALTO
 document.addEventListener("click", () => {
   if (!saltando) {
     saltando = true;
-    let salto = 0;
+    let altura = 0;
 
     let subir = setInterval(() => {
-      if (salto >= 100) {
+      if (altura >= 120) {
         clearInterval(subir);
         let bajar = setInterval(() => {
-          if (salto <= 0) {
+          if (altura <= 0) {
             clearInterval(bajar);
             saltando = false;
           }
-          salto -= 5;
-          sapo.style.bottom = salto + "px";
+          altura -= 5;
+          sapo.style.bottom = altura + "px";
         }, 20);
       }
-      salto += 5;
-      sapo.style.bottom = salto + "px";
+      altura += 5;
+      sapo.style.bottom = altura + "px";
     }, 20);
   }
 });
 
+// OBSTÁCULO
 function crearObstaculo() {
   let obs = document.createElement("div");
   obs.classList.add("obstaculo");
+  obs.innerText = "🚧";
   document.getElementById("game").appendChild(obs);
 
   let mover = setInterval(() => {
-    let sapoTop = sapo.getBoundingClientRect();
-    let obsTop = obs.getBoundingClientRect();
+    let sapoRect = sapo.getBoundingClientRect();
+    let obsRect = obs.getBoundingClientRect();
 
     if (
-      sapoTop.right > obsTop.left &&
-      sapoTop.left < obsTop.right &&
-      sapoTop.bottom > obsTop.top
+      sapoRect.right > obsRect.left &&
+      sapoRect.left < obsRect.right &&
+      sapoRect.bottom > obsRect.top
     ) {
       alert("Perdiste 😢");
       location.reload();
@@ -103,7 +100,10 @@ function crearObstaculo() {
   }, 2000);
 }
 
-setInterval(crearObstaculo, 2000);
+// ESPERA ANTES DE EMPEZAR
+setTimeout(() => {
+  setInterval(crearObstaculo, 2000);
+}, 2000);
 </script>
 
 </body>
