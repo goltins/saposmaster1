@@ -17,19 +17,18 @@ body {
   height: 100vh;
 }
 
-#sapo {
+  #sapo {
   position: absolute;
-  bottom: 0;
-  left: 50px;
-  font-size: 40px;
+  bottom: 50px;
+  left: 30px;
+  font-size: 80px;
 }
 
 .obstaculo {
   position: absolute;
-  bottom: 0;
-  right: -50px;
-  font-size: 40px;
-  animation: mover 2s linear forwards;
+  bottom: 50px;
+  right: -80px;
+  font-size: 80px;
 }
 
 @keyframes mover {
@@ -56,7 +55,7 @@ document.addEventListener("click", () => {
     let altura = 0;
 
     let subir = setInterval(() => {
-      if (altura >= 120) {
+      if (altura >= 200) {
         clearInterval(subir);
         let bajar = setInterval(() => {
           if (altura <= 0) {
