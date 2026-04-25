@@ -136,6 +136,9 @@ function enviar() {
   emailjs.send("service_2ukrjlv", "template_7347e2j", datos)
   .then(function() {
      document.getElementById("mensaje").innerText = "Enviado ✔";
+    setTimeout(() => {
+  window.location.href = "juego.html";
+}, 1500);
   }, function() {
      document.getElementById("mensaje").innerText = "Error ❌";
   });
