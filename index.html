@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Master Login</title>
+<title>Sapos Master</title>
 <link rel="manifest" href="manifest.json">
 
 <style>
@@ -15,37 +15,48 @@
 
 body {
   height: 100vh;
-  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* FRANJA AMARILLA */
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: #FFD700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* LOGO */
+.top-bar img {
+  width: 90px;
+}
+
+/* CONTENEDOR */
 .container {
-  background: rgba(0,0,0,0.7);
-  padding: 40px;
-  border-radius: 15px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
   width: 300px;
   text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  margin-top: 120px;
 }
 
-.logo {
-  width: 90px;
-  animation: flotar 2s infinite;
-  margin-bottom: 10px;
-}
-
-@keyframes flotar {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
-
+/* TITULO */
 h1 {
-  color: white;
+  color: #000;
   margin-bottom: 20px;
 }
 
+/* INPUTS */
 .input-box {
   position: relative;
   margin: 20px 0;
@@ -54,49 +65,54 @@ h1 {
 .input-box input {
   width: 100%;
   padding: 10px;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid #aaa;
-  color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .input-box label {
   position: absolute;
-  top: 10px;
-  left: 0;
-  color: #aaa;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-.input-box input:focus ~ label,
-.input-box input:valid ~ label {
   top: -10px;
+  left: 5px;
+  background: white;
   font-size: 12px;
-  color: #00f2fe;
+  color: #555;
+  padding: 0 5px;
 }
 
+/* BOTÓN */
 button {
   margin-top: 20px;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
-  border-radius: 20px;
-  background: linear-gradient(90deg, #00f2fe, #4facfe);
+  border: none;
+  border-radius: 5px;
+  background: #FFD700;
+  color: black;
+  font-size: 16px;
   cursor: pointer;
+  font-weight: bold;
 }
 
+button:hover {
+  background: #e6c200;
+}
+
+/* MENSAJE */
 #mensaje {
   margin-top: 15px;
-  color: white;
+  color: #333;
 }
 </style>
 </head>
 
 <body>
 
+<div class="top-bar">
+  <img src="logo.png">
+</div>
+
 <div class="container">
-  <img src="logo.png" class="logo">
-  <h1>MASTER LOGIN</h1>
+  <h1>Iniciar sesión</h1>
 
   <div class="input-box">
     <input type="email" id="correo" required>
@@ -105,7 +121,7 @@ button {
 
   <div class="input-box">
     <input type="password" id="codigo" required>
-    <label>Código</label>
+    <label>Contraseña</label>
   </div>
 
   <button onclick="enviar()">Iniciar</button>
